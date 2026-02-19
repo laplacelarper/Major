@@ -1,0 +1,9 @@
+{
+  "range_m": 130.0,
+  "grazing_angle_deg": 70.0,
+  "frequency_khz": 400.0,
+  "beam_width_deg": 4.0,
+  "cosine_exponent": 5.0,
+  "base_intensity": 0.9,
+  "noise_level": 0.4
+}

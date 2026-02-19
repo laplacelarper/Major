@@ -1,0 +1,9 @@
+2025-12-31 23:28:19 - sonar_detection - INFO - Logging initialized - Level: INFO
+2025-12-31 23:28:19 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2025-12-31 23:28:19 - sonar_detection - INFO - Test log message
+2025-12-31 23:28:23 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2025-12-31 23:28:23 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2025-12-31 23:29:07 - sonar_detection - INFO - Logging initialized - Level: INFO
+2025-12-31 23:29:07 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2025-12-31 23:29:07 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2025-12-31 23:29:07 - sonar_detection - INFO - System initialization completed successfully

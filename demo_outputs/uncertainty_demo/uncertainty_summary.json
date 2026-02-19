@@ -1,0 +1,32 @@
+{
+  "method": "Monte Carlo Dropout",
+  "num_samples": 20,
+  "dropout_rate": 0.1,
+  "uncertainty_types": {
+    "epistemic": "Model uncertainty (what the model doesn't know)",
+    "aleatoric": "Data uncertainty (inherent noise in data)",
+    "total": "Combined uncertainty measure"
+  },
+  "example_scenarios": [
+    {
+      "name": "High Confidence",
+      "uncertainty": 0.15,
+      "prob_mine": 0.85
+    },
+    {
+      "name": "Medium Confidence",
+      "uncertainty": 0.45,
+      "prob_mine": 0.65
+    },
+    {
+      "name": "Low Confidence",
+      "uncertainty": 0.68,
+      "prob_mine": 0.52
+    },
+    {
+      "name": "Very Uncertain",
+      "uncertainty": 0.69,
+      "prob_mine": 0.5
+    }
+  ]
+}

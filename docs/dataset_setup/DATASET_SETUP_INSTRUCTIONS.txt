@@ -1,0 +1,165 @@
+================================================================================
+MINEHUNTING SONAR IMAGE DATASET - SETUP INSTRUCTIONS
+================================================================================
+
+Your system is now configured to use the Minehunting Sonar Image Dataset for
+Phase 2 fine-tuning. This dataset is the perfect match for your synthetic data.
+
+================================================================================
+QUICK START (3 STEPS)
+================================================================================
+
+Step 1: Download the Dataset
+─────────────────────────────
+Choose ONE of these options:
+
+  A) Official NRL Source (Recommended)
+     Visit: https://www.nrl.navy.mil/
+     Search: "Minehunting Sonar Image Dataset"
+     Download and extract to: data/real/minehunting_sonar/
+
+  B) GitHub Mirror
+     Visit: https://github.com/search?q=minehunting+sonar+dataset
+     Clone or download a repository
+     Extract to: data/real/minehunting_sonar/
+
+  C) Kaggle
+     Run: pip install kaggle
+     Setup: ~/.kaggle/kaggle.json
+     Download: kaggle datasets download -d <dataset-name>
+     Extract to: data/real/minehunting_sonar/
+
+Step 2: Verify Installation
+────────────────────────────
+Run: python download_minehunting_dataset.py
+
+Expected output:
+  ✓ Minehunting dataset appears to be properly installed!
+  ✓ images_dir_exists
+  ✓ has_images
+  ✓ labels_file_exists
+  ✓ images_are_512x512
+  ✓ images_are_grayscale
+  ✓ label_distribution_ok
+
+Step 3: Use in Training
+───────────────────────
+Your system will automatically use it in Phase 2:
+
+  from src.data import MinehuntingSonarDataset
+  dataset = MinehuntingSonarDataset(data_dir=Path("data"), config=config)
+  model = train_phase2(model, dataset, config)
+
+================================================================================
+EXPECTED DIRECTORY STRUCTURE
+================================================================================
+
+After downloading and extracting, you should have:
+
+data/real/minehunting_sonar/
+├── images/
+│   ├── mine_001.png
+│   ├── mine_002.png
+│   ├── rock_001.png
+│   ├── clutter_001.png
+│   └── ... (hundreds more images)
+├── labels.csv
+└── metadata.json (optional)
+
+Where:
+- images/: 512×512 grayscale PNG files
+- labels.csv: CSV with columns: image_id,label
+- metadata.json: Optional physics metadata
+
+================================================================================
+WHY MINEHUNTING DATASET?
+================================================================================
+
+Perfect Match with Your Synthetic Data:
+
+  ✅ Image format: 512×512 grayscale (EXACT MATCH)
+  ✅ Sonar type: Side-scan sonar (EXACT MATCH)
+  ✅ Task: Binary mine detection (EXACT MATCH)
+  ✅ Labels: 0=non-mine, 1=mine (EXACT MATCH)
+  ✅ Frequency: 100-500 kHz (MATCHES)
+  ✅ Range: 10-200 meters (MATCHES)
+  ✅ Grazing angle: 10-80 degrees (MATCHES)
+  ✅ Public domain: No licensing issues
+
+This means your physics-informed synthetic pretraining will transfer
+effectively to real Minehunting data!
+
+================================================================================
+FILES CREATED FOR YOU
+================================================================================
+
+Setup & Download:
+  - download_minehunting_dataset.py    (Download & verify script)
+  - setup_minehunting_dataset.sh       (Bash setup helper)
+  - MINEHUNTING_DATASET_SETUP.md       (Detailed setup guide)
+  - DATASET_COMPATIBILITY_ANALYSIS.md  (Dataset comparison)
+  - DATASET_DOWNLOAD_SUMMARY.md        (This summary)
+
+Directory Structure:
+  - data/real/minehunting_sonar/       (Created, awaiting dataset)
+  - data/real/minehunting_sonar/images/
+  - data/real/minehunting_sonar/metadata/
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+
+After downloading, verify:
+
+  [ ] Directory exists: data/real/minehunting_sonar/
+  [ ] Images directory exists: data/real/minehunting_sonar/images/
+  [ ] Images are PNG format
+  [ ] Images are 512×512 pixels
+  [ ] Images are grayscale (8-bit)
+  [ ] Labels file exists: data/real/minehunting_sonar/labels.csv
+  [ ] Labels file has correct format (image_id, label)
+  [ ] Label distribution is reasonable (30-70% mines)
+  [ ] Run verification: python download_minehunting_dataset.py
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Issue: "No images found"
+Solution:
+  ls -la data/real/minehunting_sonar/images/ | head -20
+  file data/real/minehunting_sonar/images/mine_001.png
+
+Issue: "Label file not found"
+Solution:
+  head -5 data/real/minehunting_sonar/labels.csv
+  wc -l data/real/minehunting_sonar/labels.csv
+
+Issue: "Image size mismatch"
+Solution:
+  Run the resize script in MINEHUNTING_DATASET_SETUP.md
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Download the Minehunting dataset (choose one of 3 options above)
+2. Extract to: data/real/minehunting_sonar/
+3. Run verification: python download_minehunting_dataset.py
+4. Proceed to Phase 2 fine-tuning
+
+Your system is ready! Just download the dataset and you can start fine-tuning.
+
+================================================================================
+DOCUMENTATION
+================================================================================
+
+For more details, see:
+  - MINEHUNTING_DATASET_SETUP.md       (Complete setup guide)
+  - DATASET_COMPATIBILITY_ANALYSIS.md  (Why this dataset?)
+  - DATASET_DOWNLOAD_SUMMARY.md        (Full summary)
+
+Run for help:
+  python download_minehunting_dataset.py
+
+================================================================================

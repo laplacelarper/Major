@@ -1,0 +1,26 @@
+{
+  "data_flow": [
+    "Physics Engine \u2192 Synthetic Images (512x512)",
+    "Real Datasets \u2192 Preprocessed Images",
+    "Combined Data \u2192 CNN Models",
+    "CNN Models \u2192 Predictions + Uncertainty",
+    "Monte Carlo Dropout \u2192 Uncertainty Quantification"
+  ],
+  "model_architectures": {
+    "unet": {
+      "type": "Encoder-Decoder",
+      "parameters": "~31M",
+      "specialty": "Segmentation tasks"
+    },
+    "resnet18": {
+      "type": "Residual Network",
+      "parameters": "~11M",
+      "specialty": "Classification tasks"
+    },
+    "efficientnet_b0": {
+      "type": "Mobile-Optimized",
+      "parameters": "~5M",
+      "specialty": "Efficient inference"
+    }
+  }
+}
