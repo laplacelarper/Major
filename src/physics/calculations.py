@@ -38,8 +38,12 @@ def calculate_backscatter_intensity(
     # Calculate cosine of grazing angle
     cos_grazing = np.cos(grazing_angle_rad)
     
-    # Apply cosⁿ(θ) formula
+    # Apply cosⁿ(θ) formula with boosted base intensity
+    # Real sonar images have higher baseline intensity
     intensity = base_intensity * np.power(cos_grazing, cosine_exponent)
+    
+    # Boost overall intensity to match real sonar data
+    intensity = 0.3 + 0.7 * intensity  # Shift range to maintain visibility
     
     # Ensure intensity is in valid range [0, 1]
     intensity = np.clip(intensity, 0.0, 1.0)
@@ -76,10 +80,16 @@ def calculate_range_attenuation(
     range_map = np.maximum(range_map, 0.1)  # Minimum 0.1m range
     
     # Calculate attenuation factor: 1/R^n
-    attenuation = np.power(reference_range / range_map, attenuation_coefficient)
+    # Use the minimum range as reference to keep values reasonable
+    min_range = range_map.min()
+    attenuation = np.power(min_range / range_map, attenuation_coefficient)
     
-    # Normalize to [0, 1] range
+    # Normalize to [0, 1] range and scale to maintain visibility
+    # Apply a softer attenuation curve to match real sonar data
     attenuation = np.clip(attenuation, 0.0, 1.0)
+    
+    # Boost overall intensity to match real sonar images (mean ~0.18 in 0-1 range)
+    attenuation = 0.50 + 0.50 * attenuation  # Shift range from [0,1] to [0.50,1.0]
     
     logger.debug(f"Calculated range attenuation with coefficient {attenuation_coefficient}, "
                 f"range: [{range_map.min():.1f}, {range_map.max():.1f}]m, "

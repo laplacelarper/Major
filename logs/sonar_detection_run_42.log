@@ -7,3 +7,78 @@
 2025-12-31 23:29:07 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
 2025-12-31 23:29:07 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
 2025-12-31 23:29:07 - sonar_detection - INFO - System initialization completed successfully
+2026-02-25 14:11:06 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-02-25 14:11:06 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-02-25 14:11:06 - sonar_detection - INFO - Test log message
+2026-02-25 14:11:06 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-02-25 14:11:06 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-02-25 14:11:22 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-02-25 14:11:22 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-02-25 14:11:22 - sonar_detection - INFO - Test log message
+2026-02-25 14:11:22 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-02-25 14:11:22 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-02-25 15:30:58 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-02-25 15:30:58 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-02-25 15:30:58 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-02-25 15:30:58 - sonar_detection - INFO - System execution completed successfully
+2026-02-25 15:31:08 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-02-25 15:31:08 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-02-25 15:31:08 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-02-25 15:31:10 - sonar_detection - INFO - Generated 10 synthetic images
+2026-02-25 15:31:10 - sonar_detection - INFO - System execution completed successfully
+2026-03-01 19:56:29 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 19:56:29 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 19:56:29 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:00:50 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:00:50 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:00:50 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:01:08 - sonar_detection - INFO - Generated 100 synthetic images
+2026-03-01 21:01:08 - sonar_detection - INFO - System execution completed successfully
+2026-03-01 21:01:46 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:01:46 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:01:46 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:04:53 - sonar_detection - INFO - Generated 1000 synthetic images
+2026-03-01 21:04:53 - sonar_detection - INFO - System execution completed successfully
+2026-03-01 21:13:42 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:13:42 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:13:42 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:16:54 - sonar_detection - INFO - Generated 1000 synthetic images
+2026-03-01 21:16:54 - sonar_detection - INFO - System execution completed successfully
+2026-03-01 21:38:38 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:38:38 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:38:38 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:39:17 - sonar_detection - INFO - System execution completed successfully
+2026-03-01 21:39:33 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:39:33 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:39:33 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:39:55 - sonar_detection - INFO - Generated 100 synthetic images
+2026-03-01 21:41:58 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:41:58 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:41:58 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:42:17 - sonar_detection - INFO - Generated 100 synthetic images
+2026-03-01 21:43:24 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:43:24 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:43:24 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:44:53 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:44:53 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:44:53 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:44:54 - sonar_detection - INFO - Starting Phase 1: Synthetic Pretraining
+2026-03-01 21:44:54 - sonar_detection - INFO - Created model: unet
+2026-03-01 21:49:23 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:49:23 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:49:23 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:49:27 - sonar_detection - INFO - Starting Phase 1: Synthetic Pretraining
+2026-03-01 21:49:27 - sonar_detection - INFO - Created model: unet
+2026-03-01 21:49:27 - sonar_detection - INFO - Created data loaders: train=70, val=15
+2026-03-01 21:59:40 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 21:59:40 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 21:59:40 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 21:59:44 - sonar_detection - INFO - Starting Phase 1: Synthetic Pretraining
+2026-03-01 21:59:45 - sonar_detection - INFO - Created model: unet
+2026-03-01 21:59:45 - sonar_detection - INFO - Created data loaders: train=70, val=15
+2026-03-01 22:39:41 - sonar_detection - INFO - Logging initialized - Level: INFO
+2026-03-01 22:39:41 - sonar_detection - INFO - Log file: /Users/urjitam/major/logs/sonar_detection_run_42.log
+2026-03-01 22:39:41 - sonar_detection - INFO - Random seeds set to 42, deterministic=True
+2026-03-01 22:39:53 - sonar_detection - INFO - Starting Phase 1: Synthetic Pretraining
+2026-03-01 22:39:53 - sonar_detection - INFO - Created model: unet
+2026-03-01 22:39:53 - sonar_detection - INFO - Created data loaders: train=70, val=15

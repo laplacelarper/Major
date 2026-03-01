@@ -32,19 +32,19 @@ model:
 # Training pipeline configuration
 training:
   # Phase 1: Synthetic pretraining
-  phase1_epochs: 100
+  phase1_epochs: 2
   phase1_lr: 0.001
   phase1_batch_size: 16
   phase1_weight_decay: 0.0001
   
   # Phase 2: Real data fine-tuning
-  phase2_epochs: 50
+  phase2_epochs: 2
   phase2_lr: 0.00001
   phase2_batch_size: 8
   phase2_freeze_layers: 3
   
   # Phase 3: Uncertainty calibration
-  phase3_epochs: 20
+  phase3_epochs: 2
   phase3_lr: 0.000001
   phase3_batch_size: 8
   
@@ -60,7 +60,7 @@ training:
 data:
   image_size: [512, 512]
   image_channels: 1
-  synthetic_dataset_size: 10000
+  synthetic_dataset_size: 100
   real_data_percentage: 0.3
   train_split: 0.7
   val_split: 0.15
@@ -94,7 +94,7 @@ log_to_console: true
 
 # Hardware
 device: "auto"  # "auto", "cpu", "cuda"
-num_workers: 4
+num_workers: 0  # Set to 0 to avoid multiprocessing issues on macOS
 pin_memory: true
 
 # Experiment tracking

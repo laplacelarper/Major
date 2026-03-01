@@ -336,9 +336,10 @@ class SyntheticSonarSubset(Dataset):
         original_idx = self.indices[idx]
         sample = self.dataset[original_idx]
         
-        # Apply subset-specific transform
+        # Apply subset-specific transform if provided
+        # Note: transform should operate on the entire sample dict, not just the image
         if self.transform:
-            sample['image'] = self.transform(sample['image'])
+            sample = self.transform(sample)
         
         return sample
     

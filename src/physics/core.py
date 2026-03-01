@@ -6,6 +6,7 @@ from pathlib import Path
 import logging
 from dataclasses import dataclass
 
+from .sidescan_renderer import SideScanRenderer, SideScanParams
 from .renderer import SonarImageRenderer, ImageExporter, PhysicsMetadata, generate_random_scene_parameters
 from .calculations import *
 from .noise import *
@@ -26,7 +27,8 @@ class PhysicsEngine:
     def __init__(
         self,
         image_size: Tuple[int, int] = (512, 512),
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        use_realistic_renderer: bool = True
     ):
         """
         Initialize the physics engine.
@@ -34,16 +36,31 @@ class PhysicsEngine:
         Args:
             image_size: Output image size (height, width)
             output_dir: Directory for saving generated images (optional)
+            use_realistic_renderer: If True, use side-scan sonar renderer; else use legacy renderer
         """
         self.image_size = image_size
-        self.renderer = SonarImageRenderer(image_size)
+        self.use_realistic_renderer = use_realistic_renderer
+        
+        if use_realistic_renderer:
+            # Use new side-scan sonar renderer
+            params = SideScanParams(
+                image_width=image_size[1],
+                image_height=image_size[0]
+            )
+            self.sidescan_renderer = SideScanRenderer(params)
+            self.renderer = None
+        else:
+            # Use legacy renderer
+            self.renderer = SonarImageRenderer(image_size)
+            self.sidescan_renderer = None
         
         if output_dir:
             self.exporter = ImageExporter(output_dir)
         else:
             self.exporter = None
         
-        logger.info(f"Initialized PhysicsEngine with image size {image_size}")
+        logger.info(f"Initialized PhysicsEngine with image size {image_size}, "
+                   f"realistic_renderer={use_realistic_renderer}")
     
     def generate_single_image(
         self,
@@ -52,7 +69,7 @@ class PhysicsEngine:
         object_heights: Optional[List[float]] = None,
         object_labels: Optional[List[int]] = None,
         random_seed: Optional[int] = None
-    ) -> Tuple[np.ndarray, int, PhysicsMetadata]:
+    ) -> Tuple[np.ndarray, int, Optional[PhysicsMetadata]]:
         """
         Generate a single synthetic sonar image.
         
@@ -66,20 +83,35 @@ class PhysicsEngine:
         Returns:
             Tuple of (image_array, label, metadata)
             
-        Requirements: 1.1 - Generate 512x512 grayscale PNG images with realistic sonar characteristics
+        Requirements: 1.1 - Generate 512x512 RGB images with realistic side-scan sonar characteristics
         """
-        if physics_params is None:
-            # Use default parameters
-            physics_params = self._get_default_physics_params()
-        
-        # Generate the image using the renderer
-        image, label, metadata = self.renderer.render_sonar_image(
-            physics_params=physics_params,
-            object_positions=object_positions,
-            object_heights=object_heights,
-            object_labels=object_labels,
-            random_seed=random_seed
-        )
+        if self.use_realistic_renderer:
+            # Use new side-scan sonar renderer
+            objects = []
+            if object_positions and object_labels:
+                for pos, label in zip(object_positions, object_labels):
+                    objects.append({
+                        'type': 'mine' if label == 1 else 'rock',
+                        'x': pos[0] / self.image_size[1],  # Normalize to 0-1
+                        'y': pos[1] / self.image_size[0],
+                        'size': 15
+                    })
+            
+            image, label = self.sidescan_renderer.render(objects, random_seed=random_seed)
+            metadata = None  # Metadata not used with new renderer
+            
+        else:
+            # Use legacy renderer
+            if physics_params is None:
+                physics_params = self._get_default_physics_params()
+            
+            image, label, metadata = self.renderer.render_sonar_image(
+                physics_params=physics_params,
+                object_positions=object_positions,
+                object_heights=object_heights,
+                object_labels=object_labels,
+                random_seed=random_seed
+            )
         
         logger.debug(f"Generated single sonar image with label {label}")
         
@@ -88,16 +120,16 @@ class PhysicsEngine:
     def generate_dataset(
         self,
         num_samples: int,
-        physics_config: Dict[str, Any],
+        physics_config: Optional[Dict[str, Any]] = None,
         save_to_disk: bool = True,
         random_seed: Optional[int] = None
-    ) -> Tuple[np.ndarray, np.ndarray, List[PhysicsMetadata]]:
+    ) -> Tuple[np.ndarray, np.ndarray, Optional[List[PhysicsMetadata]]]:
         """
         Generate a complete dataset of synthetic sonar images.
         
         Args:
             num_samples: Number of images to generate
-            physics_config: Configuration for physics parameter ranges
+            physics_config: Configuration for physics parameter ranges (optional for realistic renderer)
             save_to_disk: Whether to save images to disk
             random_seed: Base random seed for reproducibility
             
@@ -113,47 +145,90 @@ class PhysicsEngine:
         labels = []
         metadata_list = []
         
-        logger.info(f"Generating dataset with {num_samples} synthetic sonar images")
+        logger.info(f"Generating dataset with {num_samples} synthetic sonar images "
+                   f"(realistic_renderer={self.use_realistic_renderer})")
         
-        for i in range(num_samples):
-            # Generate random scene parameters
-            sample_seed = (random_seed + i) if random_seed else None
-            scene_params = generate_random_scene_parameters(
-                physics_config=physics_config,
-                random_seed=sample_seed
-            )
+        if self.use_realistic_renderer:
+            # Use new side-scan sonar renderer
+            for i in range(num_samples):
+                # Randomly decide if this image has a mine
+                has_mine = np.random.rand() < 0.4  # 40% mines, 60% rocks
+                
+                # Generate random objects
+                objects = []
+                num_objects = np.random.randint(1, 4)  # 1-3 objects per image
+                
+                for _ in range(num_objects):
+                    obj_type = 'mine' if (has_mine and len(objects) == 0) else np.random.choice(['mine', 'rock'], p=[0.3, 0.7])
+                    
+                    objects.append({
+                        'type': obj_type,
+                        'x': np.random.uniform(0.1, 0.9),
+                        'y': np.random.uniform(0.2, 0.9),
+                        'size': np.random.uniform(10, 25)
+                    })
+                    
+                    if obj_type == 'mine':
+                        has_mine = True
+                
+                # Render image
+                seed = (random_seed + i) if random_seed else None
+                image, label = self.sidescan_renderer.render(objects, random_seed=seed)
+                
+                images.append(image)
+                labels.append(label)
+                
+                # Save to disk if requested
+                if save_to_disk and self.exporter:
+                    image_id = f"synthetic_{i:06d}"
+                    self.exporter.save_image(image, image_id)
+                
+                if (i + 1) % 100 == 0:
+                    logger.info(f"Generated {i + 1}/{num_samples} images")
+        
+        else:
+            # Use legacy renderer
+            if physics_config is None:
+                physics_config = {}
             
-            # Extract object parameters
-            object_positions = scene_params.pop('object_positions', [])
-            object_heights = scene_params.pop('object_heights', [])
-            object_labels = scene_params.pop('object_labels', [])
-            
-            # Generate image
-            image, label, metadata = self.generate_single_image(
-                physics_params=scene_params,
-                object_positions=object_positions,
-                object_heights=object_heights,
-                object_labels=object_labels,
-                random_seed=sample_seed
-            )
-            
-            images.append(image)
-            labels.append(label)
-            metadata_list.append(metadata)
-            
-            # Save to disk if requested
-            if save_to_disk and self.exporter:
-                image_id = f"synthetic_{i:06d}"
-                self.exporter.save_image_with_metadata(
-                    image=image,
-                    label=label,
-                    metadata=metadata,
-                    image_id=image_id
+            for i in range(num_samples):
+                # Generate random scene parameters
+                sample_seed = (random_seed + i) if random_seed else None
+                scene_params = generate_random_scene_parameters(
+                    physics_config=physics_config,
+                    random_seed=sample_seed
                 )
-            
-            # Log progress
-            if (i + 1) % 100 == 0:
-                logger.info(f"Generated {i + 1}/{num_samples} images")
+                
+                # Extract object parameters
+                object_positions = scene_params.pop('object_positions', [])
+                object_heights = scene_params.pop('object_heights', [])
+                object_labels = scene_params.pop('object_labels', [])
+                
+                # Generate image
+                image, label, metadata = self.generate_single_image(
+                    physics_params=scene_params,
+                    object_positions=object_positions,
+                    object_heights=object_heights,
+                    object_labels=object_labels,
+                    random_seed=sample_seed
+                )
+                
+                images.append(image)
+                labels.append(label)
+                metadata_list.append(metadata)
+                
+                # Save to disk if requested
+                if save_to_disk and self.exporter:
+                    image_id = f"synthetic_{i:06d}"
+                    self.exporter.save_image_with_metadata(
+                        image=image,
+                        label=label,
+                        metadata=metadata,
+                        image_id=image_id
+                    )
+                
+                if (i + 1) % 100 == 0:
+                    logger.info(f"Generated {i + 1}/{num_samples} images")
         
         # Convert to numpy arrays
         images_array = np.stack(images, axis=0)
@@ -183,7 +258,7 @@ class PhysicsEngine:
                    f"Mine samples: {np.sum(labels_array == 1)}, "
                    f"No-mine samples: {np.sum(labels_array == 0)}")
         
-        return images_array, labels_array, metadata_list
+        return images_array, labels_array, metadata_list if not self.use_realistic_renderer else None
     
     def _get_default_physics_params(self) -> Dict[str, Any]:
         """Get default physics parameters for image generation."""
