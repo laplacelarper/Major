@@ -1,0 +1,35 @@
+# Model checkpoints
+checkpoints/*.pth
+checkpoints/*.h5
+checkpoints/*.ckpt
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+logs/*.log
+
+# Demo outputs
+demo_outputs/
+
+# Synthetic data (can be regenerated)
+data/synthetic/*.png
+data/synthetic/*.json
+
+# OS files
+.DS_Store
+desktop.ini
